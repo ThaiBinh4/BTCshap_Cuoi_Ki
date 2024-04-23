@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BTdatabasefirst.Models.NhanVien>
+
+@{
+    ViewData["Title"] = "Index1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>nhân viên phòng marketing 30-40 tuổi</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tennhanvien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tuoi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdphongbanNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    //nhân viên phòng marketing 30-40 tuổi
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tennhanvien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tuoi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdphongbanNavigation.Idphongban)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdphongbanNavigation.Tenphongban)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Idnhanvien">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Idnhanvien">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Idnhanvien">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
