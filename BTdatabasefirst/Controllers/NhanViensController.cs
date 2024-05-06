@@ -100,9 +100,17 @@ namespace BTdatabasefirst.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(nhanvien);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Kiểm tra xem số điện thoại có 3 số đầu là "098" không
+                if (nhanvien.Sdt.StartsWith("098") || nhanvien.Sdt.StartsWith("090")|| nhanvien.Sdt.StartsWith("091")|| nhanvien.Sdt.StartsWith("031")|| nhanvien.Sdt.StartsWith("035")|| nhanvien.Sdt.StartsWith("038"))
+                {
+                    _context.Add(nhanvien);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("Sdt", "Số điện thoại không hợp lệ. Số điện thoại phải bắt đầu bằng  '090', '098', '091', '031', '035', '038'.");
+                }
             }
             ViewData["Idcv"] = new SelectList(_context.Chucvus, "Idcv", "Idcv", nhanvien.Idcv);
             ViewData["Idpb"] = new SelectList(_context.Phongbans, "Idpb", "Idpb", nhanvien.Idpb);
