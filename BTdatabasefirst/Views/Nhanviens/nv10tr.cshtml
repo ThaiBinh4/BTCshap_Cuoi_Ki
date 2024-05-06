@@ -1,0 +1,83 @@
+﻿@model IEnumerable<BTdatabasefirst.Models.Nhanvien>
+
+@{
+    ViewData["Title"] = "nv10tr";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h1 {
+        text-align: center;
+        color: blue;
+    }
+
+    .chitiet {
+        width: 70px;
+        height: 30px;
+        float: left;
+        margin: 5px;
+        background-color: red;
+        text-align: center;
+    }
+
+        .chitiet > a {
+            text-decoration: none;
+            color: white;
+        }
+</style>
+<h1>Các nhân viên lương trên 10tr </h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Tennhanvien) *@
+                Tên nhân viên
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Ngaysinh) *@
+                Ngày sinh
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Sdt) *@
+                Số điện thoại
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Idcv) *@
+                Id chức vụ
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Idpb) *@
+                Id phòng ban
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tennhanvien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ngaysinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sdt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idcv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idpb)
+                </td>
+                <td>
+                    <div class="chitiet"><a asp-action="Edit" asp-route-id="@item.Idnv">Edit</a> </div>
+                    <div class="chitiet"><a asp-action="Details" asp-route-id="@item.Idnv">Details</a> </div>
+                    <div class="chitiet"><a asp-action="Delete" asp-route-id="@item.Idnv">Delete</a></div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

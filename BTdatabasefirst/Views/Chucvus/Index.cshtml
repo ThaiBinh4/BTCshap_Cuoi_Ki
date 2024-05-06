@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BTdatabasefirst.Models.Chucvu>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h1 {
+        text-align: center;
+        color: blue;
+    }
+
+    .chucnang {
+        width: 150px;
+        height: 30px;
+        background-color: greenyellow;
+        float: left;
+        text-align: center;
+        margin: 5px;
+    }
+
+    .chucnang a {
+        text-decoration: none;
+        color: black;
+    }
+    .chitiet {
+        width: 70px;
+        height: 30px;
+        float: left;
+        margin: 5px;
+        background-color: red;
+        text-align: center;
+    }
+
+    .chitiet > a {
+        text-decoration: none;
+        color: white;
+    }
+
+</style>
+
+<h1>Chức vụ </h1>
+
+<p>
+    <div class="chucnang"><a asp-action="Create">Thêm chức vụ</a></div>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên chức vụ
+            </th>
+            <th>
+                Mô tả
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenchucvu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mota)
+            </td>
+            <td>
+                    <div class="chitiet"><a asp-action="Edit" asp-route-id="@item.Idcv">Edit</a></div>
+                    <div class="chitiet"><a asp-action="Details" asp-route-id="@item.Idcv">Details</a></div>
+                    <div class="chitiet"><a asp-action="Delete" asp-route-id="@item.Idcv">Delete</a></div>
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

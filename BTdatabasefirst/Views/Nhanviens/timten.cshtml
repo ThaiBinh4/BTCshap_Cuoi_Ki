@@ -1,0 +1,80 @@
+﻿@model IEnumerable<BTdatabasefirst.Models.Nhanvien>
+
+@{
+    ViewData["Title"] = "timten";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    h1 {
+        text-align: center;
+        color: blue;
+        
+    }
+
+    .chitiet {
+        width: 70px;
+        height: 30px;
+        float: left;
+        margin: 5px;
+        background-color: red;
+        text-align: center;
+    }
+
+        .chitiet > a {
+            text-decoration: none;
+            color: white;
+        }
+</style>
+<h1>Nhân viên tìm được </h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Tên nhân viên
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            
+            <th>
+                Id chức vụ
+            </th>
+            <th>
+                Id phòng ban
+            </th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idnv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tennhanvien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ngaysinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idcv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idpb)
+                </td>
+               
+            </tr>
+        }
+    
+        
+    </tbody>
+</table>

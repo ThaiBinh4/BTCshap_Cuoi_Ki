@@ -19,4 +19,8 @@ html {
 
 body {
   margin-bottom: 60px;
+
+}
+.nav-item >a{
+    font-size:30px;
 }

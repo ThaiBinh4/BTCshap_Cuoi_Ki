@@ -9,45 +9,61 @@ using BTdatabasefirst.Models;
 
 namespace BTdatabasefirst.Controllers
 {
-
-    public class NhanViensController : Controller
+    public class NhanviensController : Controller
     {
-        private readonly BtefnhanVienPhongBanCongtyContext _context;
+        private readonly CshapCuoikiContext _context;
 
-        public NhanViensController(BtefnhanVienPhongBanCongtyContext context)
+        public NhanviensController(CshapCuoikiContext context)
         {
             _context = context;
         }
-
-        // GET: NhanViens
-        public async Task<IActionResult> Index1()
+        public async Task<IActionResult> timten([FromQuery] string ten)
         {
-            //var btefnhanVienPhongBanCongtyContext = _context.NhanViens.Include(n => n.IdphongbanNavigation);
-            //return View(await btefnhanVienPhongBanCongtyContext.ToListAsync());
-             var nhanViens = from n in _context.NhanViens
-                            select n;
-            string idpb = (
-                            from p in _context.Phongbans
-                           where p.Tenphongban.Contains("marketing")
-                           select p.Idphongban).FirstOrDefault();
 
-            nhanViens = nhanViens.Where(n => n.Idphongban.Contains(idpb) && n.Tuoi>=30 && n.Tuoi<=40);
             
 
-            var btefnhanVienPhongBanCongtyContext = nhanViens.Include(n => n.IdphongbanNavigation);
-            return View(await btefnhanVienPhongBanCongtyContext.ToListAsync());
+            var result = from n in _context.Nhanviens
+                         where (n.Tennhanvien.Contains(ten))
+                         select n;
+            var x = result.Include(n => n.IdpbNavigation).Distinct();
+            return View(await x.ToListAsync());
+
+
+        }
+        public async Task<IActionResult> nv10tr()
+        {
+
+            var luong = from p in _context.Luongs
+                        where p.Luong1 > 10
+                        select p;
+
+            var result = from n in _context.Nhanviens
+                         join i in luong on n.Idnv equals i.Idnhanvien
+                         select n;
+            var x = result.Include(n => n.IdpbNavigation).Distinct();
+            return View(await x.ToListAsync());
+        }
+
+        public async Task<IActionResult> truongphong()
+        {
+            var nhanViens = from n in _context.Nhanviens
+                            where n.Idcv.Equals("cv01")
+                            select n;
+
+
+            var x = nhanViens.Include(n => n.IdpbNavigation);
+            return View(await x.ToListAsync());
 
         }
 
+        // GET: Nhanviens
         public async Task<IActionResult> Index()
         {
-            var btefnhanVienPhongBanCongtyContext = _context.NhanViens.Include(n => n.IdphongbanNavigation);
-            return View(await btefnhanVienPhongBanCongtyContext.ToListAsync());
-            
-
+            var cshapCuoikiContext = _context.Nhanviens.Include(n => n.IdcvNavigation).Include(n => n.IdpbNavigation);
+            return View(await cshapCuoikiContext.ToListAsync());
         }
 
-        // GET: NhanViens/Details/5
+        // GET: Nhanviens/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -55,42 +71,45 @@ namespace BTdatabasefirst.Controllers
                 return NotFound();
             }
 
-            var nhanVien = await _context.NhanViens
-                .Include(n => n.IdphongbanNavigation)
-                .FirstOrDefaultAsync(m => m.Idnhanvien == id);
-            if (nhanVien == null)
+            var nhanvien = await _context.Nhanviens
+                .Include(n => n.IdcvNavigation)
+                .Include(n => n.IdpbNavigation)
+                .FirstOrDefaultAsync(m => m.Idnv == id);
+            if (nhanvien == null)
             {
                 return NotFound();
             }
 
-            return View(nhanVien);
+            return View(nhanvien);
         }
 
-        // GET: NhanViens/Create
+        // GET: Nhanviens/Create
         public IActionResult Create()
         {
-            ViewData["Idphongban"] = new SelectList(_context.Phongbans, "Idphongban", "Idphongban");
+            ViewData["Idcv"] = new SelectList(_context.Chucvus, "Idcv", "Idcv");
+            ViewData["Idpb"] = new SelectList(_context.Phongbans, "Idpb", "Idpb");
             return View();
         }
 
-        // POST: NhanViens/Create
+        // POST: Nhanviens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Idnhanvien,Tennhanvien,Tuoi,Idphongban")] NhanVien nhanVien)
+        public async Task<IActionResult> Create([Bind("Idnv,Tennhanvien,Idpb,Idcv,Ngaysinh,Sdt")] Nhanvien nhanvien)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(nhanVien);
+                _context.Add(nhanvien);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Idphongban"] = new SelectList(_context.Phongbans, "Idphongban", "Idphongban", nhanVien.Idphongban);
-            return View(nhanVien);
+            ViewData["Idcv"] = new SelectList(_context.Chucvus, "Idcv", "Idcv", nhanvien.Idcv);
+            ViewData["Idpb"] = new SelectList(_context.Phongbans, "Idpb", "Idpb", nhanvien.Idpb);
+            return View(nhanvien);
         }
 
-        // GET: NhanViens/Edit/5
+        // GET: Nhanviens/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -98,23 +117,24 @@ namespace BTdatabasefirst.Controllers
                 return NotFound();
             }
 
-            var nhanVien = await _context.NhanViens.FindAsync(id);
-            if (nhanVien == null)
+            var nhanvien = await _context.Nhanviens.FindAsync(id);
+            if (nhanvien == null)
             {
                 return NotFound();
             }
-            ViewData["Idphongban"] = new SelectList(_context.Phongbans, "Idphongban", "Idphongban", nhanVien.Idphongban);
-            return View(nhanVien);
+            ViewData["Idcv"] = new SelectList(_context.Chucvus, "Idcv", "Idcv", nhanvien.Idcv);
+            ViewData["Idpb"] = new SelectList(_context.Phongbans, "Idpb", "Idpb", nhanvien.Idpb);
+            return View(nhanvien);
         }
 
-        // POST: NhanViens/Edit/5
+        // POST: Nhanviens/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Idnhanvien,Tennhanvien,Tuoi,Idphongban")] NhanVien nhanVien)
+        public async Task<IActionResult> Edit(string id, [Bind("Idnv,Tennhanvien,Idpb,Idcv,Ngaysinh,Sdt")] Nhanvien nhanvien)
         {
-            if (id != nhanVien.Idnhanvien)
+            if (id != nhanvien.Idnv)
             {
                 return NotFound();
             }
@@ -123,12 +143,12 @@ namespace BTdatabasefirst.Controllers
             {
                 try
                 {
-                    _context.Update(nhanVien);
+                    _context.Update(nhanvien);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NhanVienExists(nhanVien.Idnhanvien))
+                    if (!NhanvienExists(nhanvien.Idnv))
                     {
                         return NotFound();
                     }
@@ -139,11 +159,12 @@ namespace BTdatabasefirst.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Idphongban"] = new SelectList(_context.Phongbans, "Idphongban", "Idphongban", nhanVien.Idphongban);
-            return View(nhanVien);
+            ViewData["Idcv"] = new SelectList(_context.Chucvus, "Idcv", "Idcv", nhanvien.Idcv);
+            ViewData["Idpb"] = new SelectList(_context.Phongbans, "Idpb", "Idpb", nhanvien.Idpb);
+            return View(nhanvien);
         }
 
-        // GET: NhanViens/Delete/5
+        // GET: Nhanviens/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -151,36 +172,36 @@ namespace BTdatabasefirst.Controllers
                 return NotFound();
             }
 
-            var nhanVien = await _context.NhanViens
-                .Include(n => n.IdphongbanNavigation)
-                .FirstOrDefaultAsync(m => m.Idnhanvien == id);
-            if (nhanVien == null)
+            var nhanvien = await _context.Nhanviens
+                .Include(n => n.IdcvNavigation)
+                .Include(n => n.IdpbNavigation)
+                .FirstOrDefaultAsync(m => m.Idnv == id);
+            if (nhanvien == null)
             {
                 return NotFound();
             }
 
-            return View(nhanVien);
+            return View(nhanvien);
         }
 
-        // POST: NhanViens/Delete/5
+        // POST: Nhanviens/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var nhanVien = await _context.NhanViens.FindAsync(id);
-            if (nhanVien != null)
+            var nhanvien = await _context.Nhanviens.FindAsync(id);
+            if (nhanvien != null)
             {
-                _context.NhanViens.Remove(nhanVien);
+                _context.Nhanviens.Remove(nhanvien);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NhanVienExists(string id)
+        private bool NhanvienExists(string id)
         {
-            return _context.NhanViens.Any(e => e.Idnhanvien == id);
+            return _context.Nhanviens.Any(e => e.Idnv == id);
         }
     }
 }
-

@@ -46,3 +46,18 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.nav-item {
+    width: 225px;
+    height: 50px;
+    margin: 5px;
+    text-align: center;
+    background-color: blue;
+    border-radius: 20px;
+    line-height: 30px;
+}
+.container {
+    background-color: rgb(17, 208, 251, 0.8);
+    
+}
+

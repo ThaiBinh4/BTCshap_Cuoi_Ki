@@ -1,0 +1,72 @@
+﻿@model IEnumerable<BTdatabasefirst.Models.Luong>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h1 {
+        text-align: center;
+        color: blue;
+    }
+
+   
+
+    .chitiet {
+        width: 70px;
+        height: 30px;
+        float: left;
+        margin: 5px;
+        background-color: red;
+        text-align: center;
+    }
+
+        .chitiet > a {
+            text-decoration: none;
+            color: white;
+        }
+</style>
+<h1>Bảng lương các nhân viên theo từng tháng</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                Id nhân viên
+            </th>
+            <th>
+                Tháng
+            </th>
+            <th>
+                Mức lương(triệu /tháng)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Idnhanvien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Thoigian)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Luong1)
+            </td>
+            <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Idnhanvien@item.Thoigian ">Edit</a> |*@
+                    <div class="chitiet"><a asp-action="Details" asp-route-id="@item.Idnhanvien">Details</a></div>
+                    <div class="chitiet"><a asp-action="Delete" asp-route-idnhanvien="@item.Idnhanvien" asp-route-thoigian="@item.Thoigian">Delete</a></div>
+                    
+
+                    
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

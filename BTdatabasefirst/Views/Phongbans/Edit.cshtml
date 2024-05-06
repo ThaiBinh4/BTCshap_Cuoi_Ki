@@ -1,0 +1,39 @@
+﻿@model BTdatabasefirst.Models.Phongban
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Chỉnh sửa thông tin phòng ban</h1>
+
+<h4>Phongban</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Idpb" />
+            <div class="form-group">
+                @* <label asp-for="Tenphongban" class="control-label"></label> *@
+                Tên phòng ban:
+                <input asp-for="Tenphongban" class="form-control" />
+                <span asp-validation-for="Tenphongban" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @* <label asp-for="Mota" class="control-label"></label> *@
+                Mô tả:
+                <input asp-for="Mota" class="form-control" />
+                <span asp-validation-for="Mota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

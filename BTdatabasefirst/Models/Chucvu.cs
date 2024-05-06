@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace BTdatabasefirst.Models;
 
-public partial class Phongban
+public partial class Chucvu
 {
-    public string Idpb { get; set; } = null!;
+    public string Idcv { get; set; } = null!;
 
-    public string? Tenphongban { get; set; }
+    public string? Tenchucvu { get; set; }
 
     public string? Mota { get; set; }
 

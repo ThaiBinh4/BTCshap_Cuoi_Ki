@@ -1,26 +1,89 @@
-﻿@model IEnumerable<BTdatabasefirst.Models.NhanVien>
+﻿@model IEnumerable<BTdatabasefirst.Models.Nhanvien>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
+<style>
+    h1{
+        text-align: center;
+        color:blue;
+    }
+    .chucnang{
+    width:150px;
+    height: 30px;
+    background-color: greenyellow;
+    float: left;
+    text-align: center;
+    margin: 5px;
+    }
+    .chucnang a{
+        text-decoration:none;
+        color: black;
+        
+    }
+    .chitiet{
+        width :70px;
+        height:30px;
+        float :left;
+        margin:5px;
+        background-color:red;
+        text-align:center;
+        
 
-<h1>Index nhân viên</h1>
+    }
+    .chitiet >a{
+        text-decoration:none;
+            color: white;
+    }
+</style>
+
+<h1>Các nhân viên của công ty</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <div class="chucnang"><a asp-action="Create">Thêm nhân viên</a></div>
+    <div class="chucnang"> <a asp-action="nv10tr">Lương trên 10tr</a></div>
+    <div class="chucnang"> <a asp-action="truongphong">Các trưởng phòng</a></div>
+
+    <form asp-controller="Nhanviens" asp-action="timten" method="get">
+        <label for="ten">Nhập tên cần tìm</label>
+        <input type="text" id="ten" name="ten">
+        <button type="submit">Tìm</button>
+    </form>
+
+
+
+
+    
+   
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Tennhanvien)
+                @* @Html.DisplayNameFor(model => model.Tennhanvien) *@
+                Mã nhân viên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tuoi)
+                @* @Html.DisplayNameFor(model => model.Tennhanvien) *@
+                Tên nhân viên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdphongbanNavigation)
+                @* @Html.DisplayNameFor(model => model.Ngaysinh) *@
+                Ngày sinh
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Sdt) *@
+                Số điện thoại
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdcvNavigation) *@
+                Id chức vụ
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdpbNavigation) *@
+                Id phòng ban
             </th>
             <th></th>
         </tr>
@@ -28,19 +91,29 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idnv)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tennhanvien)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Tuoi)
+                @Html.DisplayFor(modelItem => item.Ngaysinh)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdphongbanNavigation.Idphongban)
+                @Html.DisplayFor(modelItem => item.Sdt)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Idnhanvien">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Idnhanvien">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Idnhanvien">Delete</a>
+                @Html.DisplayFor(modelItem => item.IdcvNavigation.Idcv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdpbNavigation.Idpb)
+            </td>
+            <td>
+                    <div class="chitiet"><a asp-action="Edit" asp-route-id="@item.Idnv">Edit</a> </div>
+                    <div class="chitiet"><a asp-action="Details" asp-route-id="@item.Idnv">Details</a> </div>
+                    <div class="chitiet"><a asp-action="Delete" asp-route-id="@item.Idnv">Delete</a></div>
+                
             </td>
         </tr>
 }
