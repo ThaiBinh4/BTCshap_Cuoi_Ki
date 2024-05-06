@@ -23,6 +23,14 @@
         text-decoration: none;
         color: white;
     }
+
+    body {
+        background-image: url(/img/bk2.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center 50px;
+    }
 </style>
 
 <h1>Các nhân viên là trưởng phòng của công ty</h1>
@@ -53,6 +61,10 @@
                 @* @Html.DisplayNameFor(model => model.IdpbNavigation) *@
                 Id phòng ban
             </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdpbNavigation) *@
+                Ảnh
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -75,6 +87,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Idpb)
+                </td>
+                <td>
+                    <img src="~/img/@item.Avatar" alt="Avatar" width="100" />
                 </td>
                 <td>
                     <div class="chitiet"><a asp-action="Edit" asp-route-id="@item.Idnv">Edit</a> </div>

@@ -16,6 +16,7 @@ public partial class Nhanvien
     public DateTime? Ngaysinh { get; set; }
 
     public string? Sdt { get; set; }
+    public string? Avatar { get; set; }
 
     public virtual Chucvu? IdcvNavigation { get; set; }
 

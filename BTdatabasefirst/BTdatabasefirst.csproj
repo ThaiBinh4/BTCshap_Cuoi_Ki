@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\img\bk2.jpg" />
     <None Include="wwwroot\img\qlns.jpg" />
   </ItemGroup>
 
@@ -26,6 +27,9 @@
 
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="wwwroot\NewFolder1\" />
+    <Folder Include="wwwroot\NewFolder2\" />
+    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
 </Project>

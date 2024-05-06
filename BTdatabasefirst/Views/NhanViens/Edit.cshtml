@@ -13,7 +13,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Idnv" />
             <div class="form-group">
@@ -45,6 +45,12 @@
                 Ngày sinh
                 <input asp-for="Sdt" class="form-control" />
                 <span asp-validation-for="Sdt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @* <label asp-for="Sdt" class="control-label"></label> *@
+                Ảnh
+                <input asp-for="Avatar" type="file" class="form-control" />
+                <span asp-validation-for="Avatar" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

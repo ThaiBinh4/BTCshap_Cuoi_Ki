@@ -85,6 +85,9 @@
                 @* @Html.DisplayNameFor(model => model.IdpbNavigation) *@
                 Id phòng ban
             </th>
+            <th>
+                Ảnh 
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -108,6 +111,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdpbNavigation.Idpb)
+            </td>
+            <td>
+                    <img src="~/img/@item.Avatar" alt="Avatar" width="100" />
             </td>
             <td>
                     <div class="chitiet"><a asp-action="Edit" asp-route-id="@item.Idnv">Edit</a> </div>
